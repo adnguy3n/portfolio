@@ -29,3 +29,9 @@ function animate() {
 }
 
 animate()
+
+// Updates Renderer Size when the window size changes.
+
+window.addEventListener('resize', ()=> {
+  renderer.setSize(window.innerWidth, window.innerHeight);
+})
