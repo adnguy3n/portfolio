@@ -1,5 +1,7 @@
-import './style.css'
+import './style.css';
 import * as THREE from 'three';
+
+// Camera, Scene, and Renderer
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
@@ -14,25 +16,37 @@ camera.position.setZ(30);
 // Torus Geometry
 
 const torusGeometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const torusMaterial = new THREE.MeshBasicMaterial({color: 0xff6347, wireframe: true});
+const torusMaterial = new THREE.MeshStandardMaterial({color: 0xff6347});
 const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 
-scene.add(torus)
+scene.add(torus);
+
+// Lighting
+
+const pointLight = new THREE.PointLight(0xFFFFFF, 100);
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.01);
+
+pointLight.position.set(10,10,10);
+scene.add(pointLight, ambientLight);
+
+const lightHelper = new THREE.PointLightHelper(pointLight);
+const gridHelper = new THREE.GridHelper();
+scene.add(lightHelper, gridHelper);
 
 function animate() {
   requestAnimationFrame(animate);
   renderer.render(scene, camera);
 
   torus.rotation.x += 0.01;
-  torus.rotation.y += 0.05;
+  torus.rotation.y += 0.005;
   torus.rotation.z += 0.01;
 }
 
-animate()
+animate();
 
 // Updates Renderer Size and Pixel Ratio when the window size changes.
 
 window.addEventListener('resize', ()=> {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
-})
+});
