@@ -38,6 +38,8 @@ scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
+// Animation
+
 function animate() {
   requestAnimationFrame(animate);
 
@@ -49,6 +51,21 @@ function animate() {
 
   renderer.render(scene, camera);
 }
+
+// Background Stars
+
+function addStar() {
+  const starGeometry = new THREE.SphereGeometry(0.25, 24, 24);
+  const starMaterial = new THREE.MeshStandardMaterial({color: 0xFFFFFF });
+  const star = new THREE.Mesh(starGeometry, starMaterial);
+
+  const [x, y, z] = Array(3).fill(undefined).map(() => THREE.MathUtils.randFloatSpread(100));
+
+  star.position.set(x, y, z);
+  scene.add(star);
+}
+
+Array(200).fill(undefined).forEach(addStar);
 
 animate();
 
