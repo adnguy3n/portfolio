@@ -22,10 +22,14 @@ const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 
 scene.add(torus);
 
+// Scene Background
+const spaceTexture = new THREE.TextureLoader().load('assets/space.jpg');
+scene.background = spaceTexture;
+
 // Lighting
 
 const pointLight = new THREE.PointLight(0xFFFFFF, 100);
-const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.01);
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1);
 
 pointLight.position.set(10,10,10);
 scene.add(pointLight, ambientLight);
