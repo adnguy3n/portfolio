@@ -23,20 +23,28 @@ const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 scene.add(torus);
 
 // Scene Background
-const spaceTexture = new THREE.TextureLoader().load('assets/space.jpg');
+const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
 scene.background = spaceTexture;
+
+// Avatar
+
+const avatarTexture = new THREE.TextureLoader().load('/avatar.jpg');
+const avatar = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: avatarTexture }));
+scene.add(avatar);
 
 // Lighting
 
-const pointLight = new THREE.PointLight(0xFFFFFF, 100);
-const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.1);
+const pointLight = new THREE.PointLight(0xFFFFFF, 0);
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 1);
 
 pointLight.position.set(10,10,10);
 scene.add(pointLight, ambientLight);
 
-const lightHelper = new THREE.PointLightHelper(pointLight);
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper);
+// Helpers
+
+//const lightHelper = new THREE.PointLightHelper(pointLight);
+//const gridHelper = new THREE.GridHelper(200, 50);
+//scene.add(lightHelper, gridHelper);
 
 // Orbit Controls
 
