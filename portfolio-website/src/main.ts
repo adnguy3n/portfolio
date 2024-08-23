@@ -83,6 +83,8 @@ function animate() {
   renderer.render(scene, camera);
 }
 
+animate();
+
 // Background Stars
 
 function addStar() {
@@ -98,7 +100,23 @@ function addStar() {
 
 Array(200).fill(undefined).forEach(addStar);
 
-animate();
+// Camera Scroll
+
+function moveCamera() {
+  const scrollPosition = document.body.getBoundingClientRect().top;
+  moon.rotation.x += 0.05;
+  moon.rotation.y += 0.075;
+  moon.rotation.z += 0.05;
+
+  avatar.rotation.y += 0.01;
+  avatar.rotation.z += 0.01;
+
+  camera.position.x = scrollPosition * -0.0002;
+  camera.position.y = scrollPosition * -0.0002;
+  camera.position.z = scrollPosition * -0.01;
+}
+
+document.body.onscroll = moveCamera
 
 // Updates Renderer Size and Pixel Ratio when the window size changes.
 
