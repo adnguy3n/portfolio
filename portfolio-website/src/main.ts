@@ -12,8 +12,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
-camera.position.setZ(30);
-camera.position.setX(-3);
+camera.position.set(0.0784, 0.0784, 3.92);
 
 // Scene Background
 const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
@@ -26,15 +25,11 @@ const torusGeometry = new THREE.TorusGeometry(10, 3, 16, 100);
 const torusMaterial = new THREE.MeshStandardMaterial({color: 0xff6347});
 const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 
-scene.add(torus);
-
 // Avatar
 
 const avatarTexture = new THREE.TextureLoader().load('/avatar.jpg');
 avatarTexture.colorSpace = THREE.SRGBColorSpace;
 const avatar = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: avatarTexture }));
-
-scene.add(avatar);
 
 // Moon
 const moonTexture = new THREE.TextureLoader().load('/moon.jpg');
@@ -50,15 +45,16 @@ const moon = new THREE.Mesh(
 
 moon.position.set(-10, 0, 30);
 
-scene.add(moon)
-
 // Lighting
 
 const pointLight = new THREE.PointLight(0xFFFFFF, 0);
 const ambientLight = new THREE.AmbientLight(0xFFFFFF, 5);
 
 pointLight.position.set(10,10,10);
-scene.add(pointLight, ambientLight);
+
+// Add items to scene
+
+scene.add(torus, avatar, moon, pointLight, ambientLight);
 
 // Helpers
 
@@ -104,7 +100,7 @@ Array(200).fill(undefined).forEach(addStar);
 // Camera Scroll
 
 function moveCamera() {
-  const scrollPosition = document.body.getBoundingClientRect().top;
+  const scrollPosition = document.body.getBoundingClientRect().top - 400;
   moon.rotation.x += 0.05;
   moon.rotation.y += 0.075;
   moon.rotation.z += 0.05;
