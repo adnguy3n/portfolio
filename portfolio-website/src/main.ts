@@ -14,6 +14,11 @@ renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
 
+// Scene Background
+const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
+spaceTexture.colorSpace = THREE.SRGBColorSpace;
+scene.background = spaceTexture;
+
 // Torus Geometry
 
 const torusGeometry = new THREE.TorusGeometry(10, 3, 16, 100);
@@ -22,20 +27,34 @@ const torus = new THREE.Mesh(torusGeometry, torusMaterial)
 
 scene.add(torus);
 
-// Scene Background
-const spaceTexture = new THREE.TextureLoader().load('/space.jpg');
-scene.background = spaceTexture;
-
 // Avatar
 
 const avatarTexture = new THREE.TextureLoader().load('/avatar.jpg');
+avatarTexture.colorSpace = THREE.SRGBColorSpace;
 const avatar = new THREE.Mesh(new THREE.BoxGeometry(3, 3, 3), new THREE.MeshBasicMaterial({ map: avatarTexture }));
+
 scene.add(avatar);
+
+// Moon
+const moonTexture = new THREE.TextureLoader().load('/moon.jpg');
+moonTexture.colorSpace = THREE.SRGBColorSpace;
+const moonNormalTexture = new THREE.TextureLoader().load('/normal.jpg')
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial( {
+    map: moonTexture,
+    normalMap: moonNormalTexture
+  })
+);
+
+moon.position.set(-10, 0, 30);
+
+scene.add(moon)
 
 // Lighting
 
 const pointLight = new THREE.PointLight(0xFFFFFF, 0);
-const ambientLight = new THREE.AmbientLight(0xFFFFFF, 1);
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 5);
 
 pointLight.position.set(10,10,10);
 scene.add(pointLight, ambientLight);
